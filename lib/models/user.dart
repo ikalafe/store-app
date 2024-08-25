@@ -16,4 +16,20 @@ class User {
     required this.locality,
     required this.password,
   });
+
+  //Serialization: Convert User object to a map
+  //Map: A Map is a collection of key-value pairs
+  //Why: Converting to a map is an intermediate step that makes it easier to serialize
+  //the object to formates like json for storage or transmission.
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'fullName': fullName,
+      'email': email,
+      'state': state,
+      'city': city,
+      'locality': locality,
+      'password': password    
+    };
+  }
 }
