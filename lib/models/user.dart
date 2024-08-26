@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 class User {
+  //Define Fields
   final String id;
   final String fullName;
   final String email;
@@ -48,6 +49,8 @@ class User {
   //it can be easily manipuated and use within the application. For example
   //we might want to display the user's fullName, email etc on the Ui.
 
+  //fromMap: This constructor take a Map<String,dynamic> and coverts into a User Object.
+  //its usefull when you already have the data in map format
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
       id: map['_id'] as String? ?? '',
@@ -59,4 +62,9 @@ class User {
       password: map['password'] as String? ?? '',
     );
   }
+
+  //fromJson: This factory constructor takes Json String, and decodes into a Map<String, dynamic>
+  //and then uses fromMap to covert that Map into a User Object.
+  factory User.fromJson(String source) =>
+      User.fromMap(json.decode(source) as Map<String, dynamic>);
 }
