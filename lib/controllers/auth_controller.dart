@@ -35,7 +35,7 @@ class AuthController {
           response: response,
           context: context,
           onSuccess: () {
-            showSnackBar(context, 'Account has been Created for you');
+            showSnackBar(context, 'Account has been Created for you',background: Colors.green);
           });
     } catch (e) {
       debugPrint('Error: $e');
@@ -66,7 +66,9 @@ class AuthController {
       manageHttpResponse(
         response: response,
         context: context,
-        onSuccess: () {},
+        onSuccess: () {
+          showSnackBar(context, 'Logged In Successfully',background: Colors.green);
+        },
       );
     } catch (e) {
       debugPrint('Error: $e');

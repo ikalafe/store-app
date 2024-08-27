@@ -26,10 +26,11 @@ void manageHttpResponse({
   }
 }
 
-void showSnackBar(BuildContext context, String title) {
+void showSnackBar(BuildContext context, String title,{Color? background}) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Text(title),
+      backgroundColor: background,
     ),
   );
 }
