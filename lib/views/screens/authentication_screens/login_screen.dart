@@ -16,6 +16,21 @@ class _LoginScreenState extends State<LoginScreen> {
   final AuthController _authController = AuthController();
   late String email;
   late String password;
+  bool _isLoading = false;
+
+  loginUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    await _authController
+        .signInUsers(context: context, email: email, password: password)
+        .whenComplete(() {
+      _formKey.currentState!.reset();
+      setState(() {
+        _isLoading = false;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -146,13 +161,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 20,
                   ),
                   InkWell(
-                    onTap: () async {
+                    onTap: () {
                       if (_formKey.currentState!.validate()) {
-                        await _authController.signInUsers(
-                          context: context,
-                          email: email,
-                          password: password,
-                        );
+                        loginUser();
                       }
                     },
                     child: Container(
@@ -168,14 +179,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       child: Center(
-                        child: Text(
-                          'Sign In',
-                          style: GoogleFonts.getFont(
-                            'Lato',
-                            fontSize: 17,
-                            color: Colors.white,
-                          ),
-                        ),
+                        child: _isLoading
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : Text(
+                                'Sign In',
+                                style: GoogleFonts.getFont(
+                                  'Lato',
+                                  fontSize: 17,
+                                  color: Colors.white,
+                                ),
+                              ),
                       ),
                     ),
                   ),
@@ -196,7 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => RegisterScreen(),
+                              builder: (context) => const RegisterScreen(),
                             ),
                           );
                         },

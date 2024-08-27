@@ -17,6 +17,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
   late String email;
   late String fullName;
   late String password;
+  bool _isLoading = false;
+
+  registerUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    await _authController
+        .signUpUsers(
+            context: context,
+            email: email,
+            fullName: fullName,
+            password: password)
+        .whenComplete(() {
+      _formKey.currentState!.reset();
+      setState(() {
+        _isLoading = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -196,13 +216,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: 20,
                   ),
                   InkWell(
-                    onTap: () async {
+                    onTap: () {
                       if (_formKey.currentState!.validate()) {
-                        await _authController.signUpUsers(
-                            context: context,
-                            email: email,
-                            fullName: fullName,
-                            password: password);
+                        registerUser();
                       } else {
                         debugPrint('Failed');
                       }
@@ -220,14 +236,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                       child: Center(
-                        child: Text(
-                          'Sign Up',
-                          style: GoogleFonts.getFont(
-                            'Lato',
-                            fontSize: 17,
-                            color: Colors.white,
-                          ),
-                        ),
+                        child: _isLoading
+                            ? const CircularProgressIndicator(color: Colors.white)
+                            : Text(
+                                'Sign Up',
+                                style: GoogleFonts.getFont(
+                                  'Lato',
+                                  fontSize: 17,
+                                  color: Colors.white,
+                                ),
+                              ),
                       ),
                     ),
                   ),
@@ -248,7 +266,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => LoginScreen(),
+                              builder: (context) => const LoginScreen(),
                             ),
                           );
                         },
