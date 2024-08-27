@@ -30,7 +30,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
             fullName: fullName,
             password: password)
         .whenComplete(() {
-      _formKey.currentState!.reset();
       setState(() {
         _isLoading = false;
       });
@@ -237,7 +236,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       child: Center(
                         child: _isLoading
-                            ? const CircularProgressIndicator(color: Colors.white)
+                            ? const CircularProgressIndicator(
+                                color: Colors.white)
                             : Text(
                                 'Sign Up',
                                 style: GoogleFonts.getFont(
