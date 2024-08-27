@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:mac_store_app/global_variables.dart';
 import 'package:mac_store_app/models/user.dart';
@@ -36,7 +38,38 @@ class AuthController {
             showSnackBar(context, 'Account has been Created for you');
           });
     } catch (e) {
-      debugPrint(e.toString());
+      debugPrint('Error: $e');
+    }
+  }
+
+  // Sign In users function
+  Future<void> signInUsers({
+    required context,
+    required String email,
+    required String password,
+  }) async {
+    try {
+      http.Response response = await http.post(
+        Uri.parse('$uri/api/signin'),
+        body: jsonEncode(
+          {
+            'email': email, // Include the email in the request body
+            'password': password, // Include the password in the request body
+          },
+        ),
+        headers: <String, String>{
+          // The will set the header
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      // Handle the respose using the manage http response
+      manageHttpResponse(
+        response: response,
+        context: context,
+        onSuccess: () {},
+      );
+    } catch (e) {
+      debugPrint('Error: $e');
     }
   }
 }
