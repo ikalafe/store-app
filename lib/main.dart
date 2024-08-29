@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:mac_store_app/views/screens/authentication_screens/login_screen.dart';
+import 'package:mac_store_app/theme.dart';
+import 'package:mac_store_app/views/screens/main_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,9 +15,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    const defaultTextStyle = TextStyle(
+      fontFamily: 'IranYekan',
+      color: LightThemeColors.primaryTextColor,
+    );
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Store App',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -33,10 +38,30 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        fontFamily: 'Dana',
+        textTheme: TextTheme(
+          bodyLarge: defaultTextStyle,
+          bodySmall:
+              defaultTextStyle.apply(color: LightThemeColors.secondryTextColor),
+          titleLarge: defaultTextStyle.copyWith(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+          titleMedium: defaultTextStyle.apply(
+            color: LightThemeColors.secondryTextColor,
+          ),
+        ),
+        colorScheme: const ColorScheme.light(
+          primary: LightThemeColors.primaryColor,
+          secondary: LightThemeColors.secondryColor,
+          onSecondary: Colors.white,
+        ),
         useMaterial3: true,
       ),
-      home: LoginScreen(),
+      home: Directionality(
+        textDirection: TextDirection.rtl,
+        child: MainScreen(),
+      ),
     );
   }
 }
