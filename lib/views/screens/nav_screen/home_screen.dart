@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mac_store_app/views/screens/nav_screen/widgets/header_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -6,8 +7,12 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(
-        child: Text('صفحه خانه'),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            HeaderWidget(),
+          ],
+        ),
       ),
     );
   }

@@ -26,55 +26,57 @@ class _MainScreen extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: const Color(0xffEFF6FF),
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: LightThemeColors.primaryColor,
-          unselectedItemColor: Colors.black,
-          currentIndex: _pageIndex,
-          onTap: (value) {
-            setState(() {
-              _pageIndex = value;
-            });
-          },
-          items: [
-            BottomNavigationBarItem(
+      bottomNavigationBar: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.10,
+        child: BottomNavigationBar(
+            backgroundColor: const Color(0xffEFF6FF),
+            type: BottomNavigationBarType.fixed,
+            selectedItemColor: LightThemeColors.primaryColor,
+            unselectedItemColor: Colors.black,
+            currentIndex: _pageIndex,
+            onTap: (value) {
+              setState(() {
+                _pageIndex = value;
+              });
+            },
+            items: [
+              BottomNavigationBarItem(
+                  icon: Icon(
+                    _pageIndex == 0 ? Iconsax.home_2 : Iconsax.home_2_copy,
+                    size: 25,
+                  ),
+                  label: 'خانه'),
+              BottomNavigationBarItem(
                 icon: Icon(
-                  _pageIndex == 0 ? Iconsax.home_2 : Iconsax.home_2_copy,
-                  // color: Colors.black,
+                  _pageIndex == 1 ? Iconsax.heart : Iconsax.heart_copy,
                   size: 25,
                 ),
-                label: 'خانه'),
-            BottomNavigationBarItem(
-              icon: Icon(
-                _pageIndex == 1 ? Iconsax.heart : Iconsax.heart_copy,
-                size: 25,
+                label: 'علاقه مندی',
               ),
-              label: 'علاقه مندی',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                _pageIndex == 2 ? Iconsax.bag_2 : Iconsax.bag_2_copy,
-                size: 25,
+              BottomNavigationBarItem(
+                icon: Icon(
+                  _pageIndex == 2 ? Iconsax.bag_2 : Iconsax.bag_2_copy,
+                  size: 25,
+                ),
+                label: 'فروشگاه',
               ),
-              label: 'فروشگاه',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                _pageIndex == 3 ? Iconsax.bag : Iconsax.bag_copy,
-                size: 25,
+              BottomNavigationBarItem(
+                icon: Icon(
+                  _pageIndex == 3 ? Iconsax.bag : Iconsax.bag_copy,
+                  size: 25,
+                ),
+                label: 'سبد خرید',
               ),
-              label: 'سبد خرید',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                _pageIndex == 4 ? Iconsax.user : Iconsax.user_copy,
-                size: 25,
+              BottomNavigationBarItem(
+                icon: Icon(
+                  _pageIndex == 4 ? Iconsax.user : Iconsax.user_copy,
+                  size: 25,
+                ),
+                label: 'پروفایل',
               ),
-              label: 'پروفایل',
-            ),
-          ]),
-          body: _pages[_pageIndex],
+            ]),
+      ),
+      body: _pages[_pageIndex],
     );
   }
 }
