@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mac_store_app/controllers/category_controller.dart';
 import 'package:mac_store_app/models/category_model.dart';
 import 'package:mac_store_app/views/screens/nav_screen/widgets/image.dart';
+import 'package:mac_store_app/views/screens/nav_screen/widgets/reusable_text_widget.dart';
 
 class CategoryItemWidget extends StatefulWidget {
   const CategoryItemWidget({super.key});
@@ -21,35 +22,31 @@ class _CategoryItemWidgetState extends State<CategoryItemWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: futureCategories,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Center(child: Text('مشکلی پیش آمد: ${snapshot.error}'));
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(child: Text('دسته بندی یافت نشد'));
-        } else {
-          final categories = snapshot.data!;
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-             const Padding(
-                padding: EdgeInsets.only(right: 25.0, top: 20),
-                child: Text(
-                  'دسته بندی',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-              ),
-              GridView.builder(
+    return Column(
+      children: [
+        const Padding(
+          padding: EdgeInsets.only(right: 20.0, left: 20, top: 30, bottom: 5),
+          child: ReusableTextWidget(title: 'دسته بندی', subTitle: 'دیدن همه'),
+        ),
+        FutureBuilder(
+          future: futureCategories,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('مشکلی پیش آمد: ${snapshot.error}'));
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Center(child: Text('دسته بندی یافت نشد'));
+            } else {
+              final categories = snapshot.data!;
+              return GridView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: categories.length,
+                itemCount: 3,
+                padding: const EdgeInsets.only(top: 10),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   mainAxisSpacing: 15,
-                  crossAxisSpacing: 8,
                 ),
                 itemBuilder: (context, index) {
                   final category = categories[index];
@@ -57,22 +54,28 @@ class _CategoryItemWidgetState extends State<CategoryItemWidget> {
                     children: [
                       ImageLoadingService(
                         imageUrl: category.image,
-                        widthImage: 95,
-                        heithImage: 95,
+                        widthImage: MediaQuery.of(context).size.width * 0.27,
+                        heithImage: MediaQuery.of(context).size.height * 0.12,
                         imageBorderRadius: BorderRadius.circular(12),
                       ),
                       const SizedBox(
                         height: 8,
                       ),
-                      Text(category.name),
+                      Text(
+                        category.name,
+                        style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 0.1),
+                      ),
                     ],
                   );
                 },
-              ),
-            ],
-          );
-        }
-      },
+              );
+            }
+          },
+        ),
+      ],
     );
   }
 }

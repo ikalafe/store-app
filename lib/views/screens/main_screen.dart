@@ -3,7 +3,7 @@ import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:mac_store_app/theme.dart';
 import 'package:mac_store_app/views/screens/nav_screen/account_screen.dart';
 import 'package:mac_store_app/views/screens/nav_screen/cart_screen.dart';
-import 'package:mac_store_app/views/screens/nav_screen/favorite_screen.dart';
+import 'package:mac_store_app/views/screens/nav_screen/category_screen.dart';
 import 'package:mac_store_app/views/screens/nav_screen/home_screen.dart';
 import 'package:mac_store_app/views/screens/nav_screen/stores_screen.dart';
 
@@ -18,13 +18,15 @@ class _MainScreen extends State<MainScreen> {
   int _pageIndex = 0;
   final List<Widget> _pages = [
     const HomeScreen(),
-    const FavoriteScreen(),
+    // const FavoriteScreen(),
+    const CategoryScreen(),
     const StoresScreen(),
     const CartScreen(),
     const AccountScreen(),
   ];
   @override
   Widget build(BuildContext context) {
+    const double sizeIcon = 25;
     return Scaffold(
       bottomNavigationBar: SizedBox(
         height: MediaQuery.of(context).size.height * 0.10,
@@ -41,36 +43,44 @@ class _MainScreen extends State<MainScreen> {
             },
             items: [
               BottomNavigationBarItem(
-                  icon: Icon(
-                    _pageIndex == 0 ? Iconsax.home_2 : Iconsax.home_2_copy,
-                    size: 25,
-                  ),
-                  label: 'خانه'),
+                icon: Icon(
+                  _pageIndex == 0 ? Iconsax.home_2 : Iconsax.home_2_copy,
+                  size: sizeIcon,
+                ),
+                label: 'خانه',
+              ),
+              // BottomNavigationBarItem(
+              //   icon: Icon(
+              //     _pageIndex == 1 ? Iconsax.heart : Iconsax.heart_copy,
+              //     size: sizeIcon,
+              //   ),
+              //   label: 'علاقه مندی',
+              // ),
               BottomNavigationBarItem(
                 icon: Icon(
-                  _pageIndex == 1 ? Iconsax.heart : Iconsax.heart_copy,
-                  size: 25,
+                  _pageIndex == 1 ? Iconsax.category : Iconsax.category_copy,
+                  size: sizeIcon,
                 ),
-                label: 'علاقه مندی',
+                label: 'دسته بندی',
               ),
               BottomNavigationBarItem(
                 icon: Icon(
                   _pageIndex == 2 ? Iconsax.bag_2 : Iconsax.bag_2_copy,
-                  size: 25,
+                  size: sizeIcon,
                 ),
                 label: 'فروشگاه',
               ),
               BottomNavigationBarItem(
                 icon: Icon(
                   _pageIndex == 3 ? Iconsax.bag : Iconsax.bag_copy,
-                  size: 25,
+                  size: sizeIcon,
                 ),
                 label: 'سبد خرید',
               ),
               BottomNavigationBarItem(
                 icon: Icon(
                   _pageIndex == 4 ? Iconsax.user : Iconsax.user_copy,
-                  size: 25,
+                  size: sizeIcon,
                 ),
                 label: 'پروفایل',
               ),
