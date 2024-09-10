@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mac_store_app/views/screens/nav_screen/widgets/banner_widget.dart';
+import 'package:mac_store_app/views/screens/nav_screen/widgets/category_item_widget.dart';
 import 'package:mac_store_app/views/screens/nav_screen/widgets/header_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -13,6 +14,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             HeaderWidget(),
             BannerWidget(),
+            CategoryItemWidget(),
           ],
         ),
       ),
