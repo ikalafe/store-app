@@ -5,14 +5,14 @@ class SubcategoryModel {
   final String categoryId;
   final String categoryName;
   final String image;
-  final String subcategoryName;
+  final String subCategoryName;
 
   SubcategoryModel({
     required this.id,
     required this.categoryId,
     required this.categoryName,
     required this.image,
-    required this.subcategoryName,
+    required this.subCategoryName,
   });
 
   Map<String, dynamic> toMap() {
@@ -21,7 +21,7 @@ class SubcategoryModel {
       'categoryId': categoryId,
       'categoryName': categoryName,
       'image': image,
-      'subcategoryName': subcategoryName,
+      'subCategoryName': subCategoryName,
     };
   }
 
@@ -33,7 +33,7 @@ class SubcategoryModel {
       categoryId: map['categoryId'] as String,
       categoryName: map['categoryName'] as String,
       image: map['image'] as String,
-      subcategoryName: map['subcategoryName'] as String,
+      subCategoryName: map['subCategoryName'] as String,
     );
   }
 }

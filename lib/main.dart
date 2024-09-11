@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: Directionality(
+      home: const Directionality(
         textDirection: TextDirection.rtl,
         child: MainScreen(),
       ),

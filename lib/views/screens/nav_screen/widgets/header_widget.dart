@@ -8,12 +8,12 @@ class HeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.18,
+      height: MediaQuery.of(context).size.height * 0.17,
       child: Stack(
         children: [
           Positioned(
             right: 20,
-            top: 60,
+            top: 50,
             child: SizedBox(
               width: MediaQuery.of(context).size.width * 0.75,
               height: 50,
@@ -42,7 +42,7 @@ class HeaderWidget extends StatelessWidget {
           ),
           Positioned(
             left: 30,
-            top: 70,
+            top: 60,
             child: Material(
               type: MaterialType.transparency,
               child: InkWell(
