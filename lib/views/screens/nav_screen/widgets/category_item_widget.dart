@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mac_store_app/controllers/category_controller.dart';
 import 'package:mac_store_app/models/category_model.dart';
+import 'package:mac_store_app/views/screens/detail/screens/inner_category_screen.dart';
 import 'package:mac_store_app/views/screens/nav_screen/widgets/image.dart';
+import 'package:mac_store_app/views/screens/nav_screen/widgets/not_found_widget.dart';
 import 'package:mac_store_app/views/screens/nav_screen/widgets/reusable_text_widget.dart';
 
 class CategoryItemWidget extends StatefulWidget {
@@ -36,7 +38,7 @@ class _CategoryItemWidgetState extends State<CategoryItemWidget> {
             } else if (snapshot.hasError) {
               return Center(child: Text('مشکلی پیش آمد: ${snapshot.error}'));
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return const Center(child: Text('دسته بندی یافت نشد'));
+              return const CostumeNotFoundWidget(message: 'دسته بندی یافت نشد');
             } else {
               final categories = snapshot.data!;
               return GridView.builder(
@@ -50,25 +52,37 @@ class _CategoryItemWidgetState extends State<CategoryItemWidget> {
                 ),
                 itemBuilder: (context, index) {
                   final category = categories[index];
-                  return Column(
-                    children: [
-                      ImageLoadingService(
-                        imageUrl: category.image,
-                        widthImage: MediaQuery.of(context).size.width * 0.27,
-                        heithImage: MediaQuery.of(context).size.height * 0.12,
-                        imageBorderRadius: BorderRadius.circular(12),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                        category.name,
-                        style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 0.1),
-                      ),
-                    ],
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => InnerCategoryScreen(
+                            categoryModel: category,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Column(
+                      children: [
+                        ImageLoadingService(
+                          imageUrl: category.image,
+                          widthImage: MediaQuery.of(context).size.width * 0.27,
+                          heithImage: MediaQuery.of(context).size.height * 0.12,
+                          imageBorderRadius: BorderRadius.circular(12),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                          category.name,
+                          style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 0.1),
+                        ),
+                      ],
+                    ),
                   );
                 },
               );

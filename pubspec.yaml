@@ -41,6 +41,8 @@ dependencies:
   flutter_dotenv: ^5.1.0
   cached_network_image: ^3.4.1
   smooth_page_indicator: ^1.2.0+3
+  flutter_riverpod: ^2.5.1
+  shared_preferences: ^2.3.2
 
 dev_dependencies:
   flutter_test:

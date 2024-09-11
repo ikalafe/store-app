@@ -5,6 +5,7 @@ import 'package:mac_store_app/models/category_model.dart';
 import 'package:mac_store_app/models/subcategory_model.dart';
 import 'package:mac_store_app/views/screens/nav_screen/widgets/header_widget.dart';
 import 'package:mac_store_app/views/screens/nav_screen/widgets/image.dart';
+import 'package:mac_store_app/views/screens/nav_screen/widgets/not_found_widget.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});
@@ -57,6 +58,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         child: const HeaderWidget(),
       ),
       body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Right side - Display categories
           Expanded(
@@ -128,95 +130,78 @@ class _CategoryScreenState extends State<CategoryScreen> {
           Expanded(
             flex: 6,
             child: _selectedCategory != null
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text(
-                          'دسته بندی: ${_selectedCategory!.name}',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                ? SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(
+                            'دسته بندی: ${_selectedCategory!.name}',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      _subcategories.isNotEmpty
-                          ? GridView.builder(
-                              shrinkWrap: true,
-                              itemCount: _subcategories.length,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 1,
-                                mainAxisSpacing: 10,
-                              ),
-                              itemBuilder: (context, index) {
-                                final subcategory = _subcategories[index];
-                                debugPrint('$subcategory');
-                                return Column(
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: Color(0xffEFF6FF),
-                                        borderRadius: BorderRadius.circular(16),
-                                      ),
-                                      width: 110,
-                                      height: 120,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          ImageLoadingService(
-                                            imageUrl: subcategory.image,
-                                            widthImage: 80,
-                                            heithImage: 80,
-                                            imageBorderRadius:
-                                                BorderRadius.circular(12),
-                                          ),
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                            subcategory.subCategoryName,
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
+                        _subcategories.isNotEmpty
+                            ? GridView.builder(
+                                shrinkWrap: true,
+                                itemCount: _subcategories.length,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 1,
+                                  mainAxisSpacing: 10,
+                                  childAspectRatio: 2 / 2,
+                                ),
+                                itemBuilder: (context, index) {
+                                  final subcategory = _subcategories[index];
+                                  debugPrint('$subcategory');
+                                  return Column(
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xffEFF6FF),
+                                          borderRadius:
+                                              BorderRadius.circular(16),
+                                        ),
+                                        width: 110,
+                                        height: 120,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            ImageLoadingService(
+                                              imageUrl: subcategory.image,
+                                              widthImage: 80,
+                                              heithImage: 80,
+                                              imageBorderRadius:
+                                                  BorderRadius.circular(12),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                );
-                              },
-                            )
-                          : SizedBox(
-                              height: 500,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'زیر مجموعه دسته بندی یافت نشد.',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16,
-                                      color: Colors.grey.shade600,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Image.asset(
-                                    'assets/images/notfound.png',
-                                    width: 150,
-                                    height: 150,
-                                  ),
-                                ],
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(
+                                              subcategory.subCategoryName,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  );
+                                },
+                              )
+                            : const CostumeNotFoundWidget(
+                                message: 'زیر مجموعه دسته بندی یافت نشد.',
                               ),
-                            ),
-                    ],
+                      ],
+                    ),
                   )
                 : Container(),
           ),
