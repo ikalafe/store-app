@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:mac_store_app/controllers/auth_controller.dart';
 import 'package:mac_store_app/views/screens/authentication_screens/register_screen.dart';
@@ -36,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.96),
       body: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
         child: Center(
           child: SingleChildScrollView(
             child: Form(
@@ -44,65 +43,70 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'Login Your Accont',
-                    style: GoogleFonts.getFont(
-                      "Lato",
-                      color: const Color(0xFF0d120E),
+                  const Text(
+                    'ورود به حساب کاربری',
+                    style: TextStyle(
+                      color: Color(0xFF0d120E),
                       fontWeight: FontWeight.bold,
                       letterSpacing: 0.2,
                       fontSize: 23,
                     ),
                   ),
-                  Text(
-                    'To Explorer the word exclusives',
-                    style: GoogleFonts.getFont(
-                      "Lato",
-                      color: const Color(0xFF0d120E),
-                      letterSpacing: 0.2,
-                      fontSize: 14,
-                    ),
-                  ),
                   Image.asset(
                     'assets/images/image_login.png',
-                    width: 200,
+                    width: 300,
                     height: 200,
                   ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Email',
-                      style: GoogleFonts.getFont('Nunito Sans',
-                          fontWeight: FontWeight.w600, letterSpacing: 0.2),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: Text(
+                        'ایمیل',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 0.2,
+                        ),
+                      ),
                     ),
                   ),
                   TextFormField(
                     onChanged: (value) => email = value,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Enter Your Email';
+                        return 'ایمیل را خالی است!';
                       } else {
                         return null;
                       }
                     },
                     decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      filled: true,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      labelText: 'Enter your Email',
-                      labelStyle: GoogleFonts.getFont(
-                        'Nunito Sans',
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: BorderSide(
+                          color: Colors.blue.shade900,
+                          width: 2.0,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: Colors.blue.shade500,
+                        ),
+                      ),
+                      labelText: 'ایمیل خودرا وارد کنید',
+                      labelStyle: const TextStyle(
+                        color: Colors.black,
                         fontSize: 14,
+                        fontFamily: 'Dana',
                         letterSpacing: 0.1,
                       ),
-                      prefixIcon: const Padding(
+                      suffixIcon: const Padding(
                         padding: EdgeInsets.all(10.0),
                         child: Icon(
-                          Icons.email_outlined,
+                          Iconsax.sms_copy,
                           size: 32,
                           color: Color(0xFF0039a6),
                         ),
@@ -110,16 +114,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Password',
-                      style: GoogleFonts.getFont(
-                        'Nunito Sans',
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 0.2,
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: Text(
+                        'رمز عبور',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 0.2,
+                        ),
                       ),
                     ),
                   ),
@@ -127,34 +133,44 @@ class _LoginScreenState extends State<LoginScreen> {
                     onChanged: (value) => password = value,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Enter Your Password';
+                        return 'رمز عبور خالی است';
                       } else {
                         return null;
                       }
                     },
                     decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(9),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: BorderSide(
+                          color: Colors.blue.shade900,
+                          width: 2.0,
                         ),
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        labelText: 'Enter your Password',
-                        labelStyle: GoogleFonts.getFont(
-                          'Nunito Sans',
-                          fontSize: 14,
-                          letterSpacing: 0.1,
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: Colors.blue.shade500,
                         ),
-                        prefixIcon: const Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: Icon(
-                            Iconsax.lock_1_copy,
-                            size: 32,
-                            color: Color(0xFF0039a6),
-                          ),
+                      ),
+                      labelText: 'لطفا رمز عمور را وارد کنید',
+                      labelStyle: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontFamily: 'Dana',
+                        letterSpacing: 0.1,
+                      ),
+                      suffixIcon: const Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Icon(
+                          Iconsax.lock_1_copy,
+                          size: 32,
+                          color: Color(0xFF0039a6),
                         ),
-                        suffixIcon: const Icon(Iconsax.eye_copy)),
+                      ),
+                    ),
                   ),
                   const SizedBox(
                     height: 20,
@@ -166,26 +182,20 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
                     },
                     child: Container(
-                      width: 319,
+                      width: MediaQuery.of(context).size.width,
                       height: 50,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        gradient: const LinearGradient(
-                          colors: [
-                            Color(0xFF102DE1),
-                            Color(0xcc0d6eff),
-                          ],
-                        ),
+                        borderRadius: BorderRadius.circular(12),
+                        color: const Color(0xff5796E4),
                       ),
                       child: Center(
                         child: _isLoading
                             ? const CircularProgressIndicator(
                                 color: Colors.white,
                               )
-                            : Text(
-                                'Sign In',
-                                style: GoogleFonts.getFont(
-                                  'Lato',
+                            : const Text(
+                                'ورود',
+                                style: TextStyle(
                                   fontSize: 17,
                                   color: Colors.white,
                                 ),
@@ -197,14 +207,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        'Need an Account?',
-                        style: GoogleFonts.roboto(
-                          fontWeight: FontWeight.w500,
-                          letterSpacing: 1,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
                       InkWell(
                         onTap: () {
                           Navigator.push(
@@ -214,13 +216,19 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           );
                         },
-                        child: Text(
-                          'Sign Up',
-                          style: GoogleFonts.roboto(
+                        child: const Text(
+                          'ثبت نام',
+                          style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            letterSpacing: 1,
-                            color: const Color(0xFF102DE1),
+                            color: Color(0xFF102DE1),
                           ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      const Text(
+                        'آیا حساب کاربری ندارید؟',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],

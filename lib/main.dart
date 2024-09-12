@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mac_store_app/theme.dart';
+import 'package:mac_store_app/views/screens/authentication_screens/login_screen.dart';
+import 'package:mac_store_app/views/screens/authentication_screens/register_screen.dart';
 import 'package:mac_store_app/views/screens/main_screen.dart';
 
 void main() async {
@@ -60,7 +62,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const Directionality(
         textDirection: TextDirection.rtl,
-        child: MainScreen(),
+        child: RegisterScreen(),
       ),
     );
   }

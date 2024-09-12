@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:mac_store_app/controllers/auth_controller.dart';
 import 'package:mac_store_app/views/screens/authentication_screens/login_screen.dart';
@@ -42,7 +41,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       // resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white.withOpacity(0.96),
       body: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
         child: Center(
           child: SingleChildScrollView(
             child: Form(
@@ -50,65 +49,69 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'Create Your Accont',
-                    style: GoogleFonts.getFont(
-                      "Lato",
-                      color: const Color(0xFF0d120E),
+                  const Text(
+                    'ایجاد حساب کاربری',
+                    style: TextStyle(
+                      color: Color(0xFF0d120E),
                       fontWeight: FontWeight.bold,
-                      letterSpacing: 0.2,
                       fontSize: 23,
-                    ),
-                  ),
-                  Text(
-                    'To Explorer the word exclusives',
-                    style: GoogleFonts.getFont(
-                      "Lato",
-                      color: const Color(0xFF0d120E),
-                      letterSpacing: 0.2,
-                      fontSize: 14,
                     ),
                   ),
                   Image.asset(
                     'assets/images/image_login.png',
-                    width: 200,
+                    width: 300,
                     height: 200,
                   ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Email',
-                      style: GoogleFonts.getFont('Nunito Sans',
-                          fontWeight: FontWeight.w600, letterSpacing: 0.2),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: Text(
+                        'ایمیل',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 0.2,
+                        ),
+                      ),
                     ),
                   ),
                   TextFormField(
                     onChanged: (value) => email = value,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Enter your Email';
+                        return 'ایمیل را خالی است!';
                       } else {
                         return null;
                       }
                     },
                     decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      filled: true,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      labelText: 'Enter your Email',
-                      labelStyle: GoogleFonts.getFont(
-                        'Nunito Sans',
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: BorderSide(
+                          color: Colors.blue.shade900,
+                          width: 2.0,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: Colors.blue.shade500,
+                        ),
+                      ),
+                      labelText: 'ایمیل خودرا وارد کنید',
+                      labelStyle: const TextStyle(
+                        color: Colors.black,
                         fontSize: 14,
+                        fontFamily: 'Dana',
                         letterSpacing: 0.1,
                       ),
-                      prefixIcon: const Padding(
+                      suffixIcon: const Padding(
                         padding: EdgeInsets.all(10.0),
                         child: Icon(
-                          Icons.email_outlined,
+                          Iconsax.sms_copy,
                           size: 32,
                           color: Color(0xFF0039a6),
                         ),
@@ -116,16 +119,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 8,
                   ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Full Name',
-                      style: GoogleFonts.getFont(
-                        'Nunito Sans',
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 0.2,
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: Text(
+                        'نام و نام خانوادگی',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),
@@ -139,23 +143,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       }
                     },
                     decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      filled: true,
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(9),
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      labelText: 'Enter your Full Name',
-                      labelStyle: GoogleFonts.getFont(
-                        'Nunito Sans',
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: BorderSide(
+                          color: Colors.blue.shade900,
+                          width: 2.0,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: Colors.blue.shade500,
+                        ),
+                      ),
+                      labelText: 'نام و نام خانوادگی را وارد کنید',
+                      labelStyle: const TextStyle(
+                        color: Colors.black,
                         fontSize: 14,
+                        fontFamily: 'Dana',
                         letterSpacing: 0.1,
                       ),
-                      prefixIcon: const Padding(
+                      suffixIcon: const Padding(
                         padding: EdgeInsets.all(10.0),
                         child: Icon(
-                          Iconsax.user_copy,
+                          Iconsax.sms_copy,
                           size: 32,
                           color: Color(0xFF0039a6),
                         ),
@@ -163,16 +177,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 8,
                   ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Password',
-                      style: GoogleFonts.getFont(
-                        'Nunito Sans',
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 0.2,
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: Text(
+                        'رمز عبور',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),
@@ -180,36 +195,46 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     onChanged: (value) => password = value,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Enter Your Password';
+                        return 'رمز عبود خالی است';
                       } else if (value.length < 8) {
-                        return 'Password must be more than 8 characters';
+                        return 'رمز عبور باید بیشتر از 8 کاراکتر باشد';
                       } else {
                         return null;
                       }
                     },
                     decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(9),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: BorderSide(
+                          color: Colors.blue.shade900,
+                          width: 2.0,
                         ),
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        labelText: 'Enter your Password',
-                        labelStyle: GoogleFonts.getFont(
-                          'Nunito Sans',
-                          fontSize: 14,
-                          letterSpacing: 0.1,
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: Colors.blue.shade500,
                         ),
-                        prefixIcon: const Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: Icon(
-                            Iconsax.lock_1_copy,
-                            size: 32,
-                            color: Color(0xFF0039a6),
-                          ),
+                      ),
+                      labelText: 'رمز عبور خود را وارد کنید',
+                      labelStyle: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontFamily: 'Dana',
+                        letterSpacing: 0.1,
+                      ),
+                      suffixIcon: const Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Icon(
+                          Iconsax.lock_1_copy,
+                          size: 32,
+                          color: Color(0xFF0039a6),
                         ),
-                        suffixIcon: const Icon(Iconsax.eye_copy)),
+                      ),
+                    ),
                   ),
                   const SizedBox(
                     height: 20,
@@ -223,26 +248,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       }
                     },
                     child: Container(
-                      width: 319,
+                      width: MediaQuery.of(context).size.width,
                       height: 50,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        gradient: const LinearGradient(
-                          colors: [
-                            Color(0xFF102DE1),
-                            Color(0xcc0d6eff),
-                          ],
-                        ),
-                      ),
+                          borderRadius: BorderRadius.circular(12),
+                          color: const Color(0xff5796E4)),
                       child: Center(
                         child: _isLoading
                             ? const CircularProgressIndicator(
                                 color: Colors.white)
-                            : Text(
-                                'Sign Up',
-                                style: GoogleFonts.getFont(
-                                  'Lato',
+                            : const Text(
+                                'ثبت نام',
+                                style: TextStyle(
                                   fontSize: 17,
+                                  fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                 ),
                               ),
@@ -253,11 +272,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        'Already have an Account?',
-                        style: GoogleFonts.roboto(
+                      const Text(
+                        'آیا حساب کاربری دارید؟',
+                        style: TextStyle(
                           fontWeight: FontWeight.w500,
-                          letterSpacing: 1,
                         ),
                       ),
                       const SizedBox(width: 8),
@@ -270,12 +288,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           );
                         },
-                        child: Text(
-                          'Sign In',
-                          style: GoogleFonts.roboto(
+                        child: const Text(
+                          'ورود',
+                          style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            letterSpacing: 1,
-                            color: const Color(0xFF102DE1),
+                            color: Color(0xFF102DE1),
                           ),
                         ),
                       ),
