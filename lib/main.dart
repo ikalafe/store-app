@@ -29,6 +29,8 @@ class MyApp extends ConsumerWidget {
     // if both token and user data are availble, update the user state
     if (token != null && userJson != null) {
       ref.read(userProvider.notifier).setUser(userJson);
+    } else {
+      ref.read(userProvider.notifier).signOut();
     }
   }
 
@@ -63,20 +65,25 @@ class MyApp extends ConsumerWidget {
         ),
         useMaterial3: true,
       ),
-      home: Directionality(
-        textDirection: TextDirection.rtl,
-        child: FutureBuilder(
-          future: _checkTokenAndSetUser(ref),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            final user = ref.watch(userProvider);
-            return user != null ? const MainScreen() : const LoginScreen();
-          },
-        ),
+      home: FutureBuilder(
+        future: _checkTokenAndSetUser(ref),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          final user = ref.watch(userProvider);
+          return user != null
+              ? const Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: MainScreen(),
+                )
+              : const Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: LoginScreen(),
+                );
+        },
       ),
     );
   }

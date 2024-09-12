@@ -22,71 +22,67 @@ class _MainScreen extends State<MainScreen> {
     const CategoryScreen(),
     const StoresScreen(),
     const CartScreen(),
-    const AccountScreen(),
+    AccountScreen(),
   ];
   @override
   Widget build(BuildContext context) {
     const double sizeIcon = 25;
-    return Scaffold(
-      bottomNavigationBar: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.10,
-        child: BottomNavigationBar(
-            backgroundColor: const Color(0xffEFF6FF),
-            type: BottomNavigationBarType.fixed,
-            selectedItemColor: LightThemeColors.primaryColor,
-            unselectedItemColor: Colors.black,
-            currentIndex: _pageIndex,
-            onTap: (value) {
-              setState(() {
-                _pageIndex = value;
-              });
-            },
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(
-                  _pageIndex == 0 ? Iconsax.home_2 : Iconsax.home_2_copy,
-                  size: sizeIcon,
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        bottomNavigationBar: SizedBox(
+          height: MediaQuery.of(context).size.height * 0.10,
+          child: BottomNavigationBar(
+              backgroundColor: const Color(0xffEFF6FF),
+              type: BottomNavigationBarType.fixed,
+              selectedItemColor: LightThemeColors.primaryColor,
+              unselectedItemColor: Colors.black,
+              currentIndex: _pageIndex,
+              onTap: (value) {
+                setState(() {
+                  _pageIndex = value;
+                });
+              },
+              items: [
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    _pageIndex == 0 ? Iconsax.home_2 : Iconsax.home_2_copy,
+                    size: sizeIcon,
+                  ),
+                  label: 'خانه',
                 ),
-                label: 'خانه',
-              ),
-              // BottomNavigationBarItem(
-              //   icon: Icon(
-              //     _pageIndex == 1 ? Iconsax.heart : Iconsax.heart_copy,
-              //     size: sizeIcon,
-              //   ),
-              //   label: 'علاقه مندی',
-              // ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  _pageIndex == 1 ? Iconsax.category : Iconsax.category_copy,
-                  size: sizeIcon,
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    _pageIndex == 1 ? Iconsax.category : Iconsax.category_copy,
+                    size: sizeIcon,
+                  ),
+                  label: 'دسته بندی',
                 ),
-                label: 'دسته بندی',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  _pageIndex == 2 ? Iconsax.bag_2 : Iconsax.bag_2_copy,
-                  size: sizeIcon,
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    _pageIndex == 2 ? Iconsax.bag_2 : Iconsax.bag_2_copy,
+                    size: sizeIcon,
+                  ),
+                  label: 'فروشگاه',
                 ),
-                label: 'فروشگاه',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  _pageIndex == 3 ? Iconsax.bag : Iconsax.bag_copy,
-                  size: sizeIcon,
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    _pageIndex == 3 ? Iconsax.bag : Iconsax.bag_copy,
+                    size: sizeIcon,
+                  ),
+                  label: 'سبد خرید',
                 ),
-                label: 'سبد خرید',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  _pageIndex == 4 ? Iconsax.user : Iconsax.user_copy,
-                  size: sizeIcon,
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    _pageIndex == 4 ? Iconsax.user : Iconsax.user_copy,
+                    size: sizeIcon,
+                  ),
+                  label: 'پروفایل',
                 ),
-                label: 'پروفایل',
-              ),
-            ]),
+              ]),
+        ),
+        body: _pages[_pageIndex],
       ),
-      body: _pages[_pageIndex],
     );
   }
 }
