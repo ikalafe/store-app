@@ -13,7 +13,7 @@ class HeaderWidget extends StatelessWidget {
         children: [
           Positioned(
             right: 20,
-            top: 50,
+            top: 40,
             child: SizedBox(
               width: MediaQuery.of(context).size.width * 0.75,
               height: 50,
@@ -42,7 +42,7 @@ class HeaderWidget extends StatelessWidget {
           ),
           Positioned(
             left: 30,
-            top: 60,
+            top: 50,
             child: Material(
               type: MaterialType.transparency,
               child: InkWell(

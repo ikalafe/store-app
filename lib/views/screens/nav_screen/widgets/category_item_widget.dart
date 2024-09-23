@@ -26,10 +26,7 @@ class _CategoryItemWidgetState extends State<CategoryItemWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Padding(
-          padding: EdgeInsets.only(right: 20.0, left: 20, top: 30, bottom: 5),
-          child: ReusableTextWidget(title: 'دسته بندی', subTitle: 'دیدن همه'),
-        ),
+        const ReusableTextWidget(title: 'دسته بندی', subTitle: 'دیدن همه'),
         FutureBuilder(
           future: futureCategories,
           builder: (context, snapshot) {
