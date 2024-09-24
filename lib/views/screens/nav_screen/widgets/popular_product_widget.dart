@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mac_store_app/controllers/product_controller.dart';
 import 'package:mac_store_app/models/product_model.dart';
+import 'package:mac_store_app/views/screens/nav_screen/widgets/product_item_widget.dart';
 
 class PopularProductWidget extends StatefulWidget {
   const PopularProductWidget({super.key});
@@ -39,13 +40,25 @@ class _PopularProductWidgetState extends State<PopularProductWidget> {
           );
         } else {
           final products = snapshot.data;
-          return ListView.builder(
-            itemCount: products!.length,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              final product = products[index];
-              return Text(product.productName);
-            },
+          return SizedBox(
+            height: MediaQuery.of(context).size.height * 0.40,
+            child: ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              itemCount: products!.length,
+              itemBuilder: (context, index) {
+                final product = products[index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8.0,
+                    vertical: 10,
+                  ),
+                  child: ProductItemWidget(
+                    product: product,
+                  ),
+                );
+              },
+            ),
           );
         }
       },
