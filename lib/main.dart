@@ -75,14 +75,8 @@ class MyApp extends ConsumerWidget {
           }
           final user = ref.watch(userProvider);
           return user != null
-              ? const Directionality(
-                  textDirection: TextDirection.rtl,
-                  child: MainScreen(),
-                )
-              : const Directionality(
-                  textDirection: TextDirection.rtl,
-                  child: LoginScreen(),
-                );
+              ? MainScreen()
+              : LoginScreen();
         },
       ),
     );

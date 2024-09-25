@@ -31,6 +31,8 @@ class ProductItemWidget extends StatelessWidget {
                   child: ImageLoadingService(
                     imageUrl: product.images[0],
                     imageBorderRadius: BorderRadius.circular(12),
+                    widthImage: 150,
+                    heithImage: 150,
                   ),
                 ),
                 Positioned(
