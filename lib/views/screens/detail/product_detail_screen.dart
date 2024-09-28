@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:mac_store_app/common/utils.dart';
 import 'package:mac_store_app/models/product_model.dart';
+import 'package:mac_store_app/provider/cart_provider.dart';
+import 'package:mac_store_app/services/manage_http_response.dart';
 import 'package:mac_store_app/views/screens/nav_screen/widgets/image.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class ProductDetailScreen extends StatefulWidget {
+class ProductDetailScreen extends ConsumerStatefulWidget {
   final ProductModel product;
   const ProductDetailScreen({
     super.key,
@@ -13,13 +16,15 @@ class ProductDetailScreen extends StatefulWidget {
   });
 
   @override
-  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+  // ignore: library_private_types_in_public_api
+  _ProductDetailScreenState createState() => _ProductDetailScreenState();
 }
 
-class _ProductDetailScreenState extends State<ProductDetailScreen> {
+class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   final PageController pageController = PageController();
   @override
   Widget build(BuildContext context) {
+    final _cartProvider = ref.read(cartProvider.notifier);
     return Scaffold(
       bottomNavigationBar: Directionality(
         textDirection: TextDirection.rtl,
@@ -33,7 +38,25 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    _cartProvider.addProductToCart(
+                      productName: widget.product.productName,
+                      productPrice: widget.product.productPrice,
+                      category: widget.product.category,
+                      image: widget.product.images,
+                      vendorId: widget.product.vendorId,
+                      productQuantity: widget.product.quantity,
+                      quantity: 1,
+                      productId: widget.product.id,
+                      description: widget.product.description,
+                      fullName: widget.product.fullName,
+                    );
+                    showSnackBar(
+                      context,
+                      'محصول به سبد خرید اضافه شد',
+                      background: Colors.green,
+                    );
+                  },
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.45,
                     height: 50,
