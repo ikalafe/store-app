@@ -47,6 +47,7 @@ class CartNotifier extends StateNotifier<Map<String, CartModel>> {
     } else {
       // If the product is not in the cart, add it with the provid details
       state = {
+        ...state,
         productId: CartModel(
           productName: productName,
           productPrice: productPrice,
@@ -85,6 +86,7 @@ class CartNotifier extends StateNotifier<Map<String, CartModel>> {
   void removeCartItem(String productId) {
     state.remove(productId);
     // Notify Listiners that the state has change
+    state = {...state}; 
   }
 
   // Method to calculate total amount of items we have in cart
