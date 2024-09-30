@@ -12,6 +12,7 @@ class CheckoutScreen extends ConsumerStatefulWidget {
 }
 
 class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
+  String selectedPaymentMethod = 'درگاه پرداخت';
   @override
   Widget build(BuildContext context) {
     final deviceWidth = MediaQuery.of(context).size.width;
@@ -36,6 +37,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       body: Directionality(
         textDirection: TextDirection.rtl,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -131,6 +133,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               height: 40,
             ),
             Flexible(
+              fit: FlexFit.tight,
               child: ListView.builder(
                 itemBuilder: (context, index) {
                   final cartItem = cartData.values.toList()[index];
@@ -171,18 +174,62 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                 itemCount: cartData.length,
               ),
             ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30.0),
+              child: Text(
+                'روش پرداخت را انتخاب کنید',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: RadioListTile<String>(
+                title: const Text(
+                  'درگاه پرداخت',
+                  style: TextStyle(fontFamily: 'Dana', fontSize: 18),
+                ),
+                value: 'درگاه پرداخت',
+                groupValue: selectedPaymentMethod,
+                onChanged: (String? value) {
+                  setState(() {
+                    selectedPaymentMethod = value!;
+                  });
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: RadioListTile<String>(
+                title: const Text(
+                  'پرداخت درب منزل',
+                  style: TextStyle(fontFamily: 'Dana', fontSize: 18),
+                ),
+                value: 'پرداخت درب منزل',
+                groupValue: selectedPaymentMethod,
+                onChanged: (String? value) {
+                  setState(() {
+                    selectedPaymentMethod = value!;
+                  });
+                },
+              ),
+            ),
             Container(
               width: deviceWidth,
               height: 56,
-              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 30),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 30),
               decoration: BoxDecoration(
-                color: Color(0xff5796E4),
+                color: const Color(0xff5796E4),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Center(
                 child: Text(
-                  'پرداخت',
-                  style: TextStyle(
+                  selectedPaymentMethod == 'درگاه پرداخت'
+                      ? 'پرداخت'
+                      : 'ثبت سفارش',
+                  style:const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                     color: Colors.white,
