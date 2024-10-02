@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:mac_store_app/common/utils.dart';
+import 'package:mac_store_app/controllers/order_controller.dart';
 import 'package:mac_store_app/provider/cart_provider.dart';
+import 'package:mac_store_app/provider/user_provider.dart';
 
 class CheckoutScreen extends ConsumerStatefulWidget {
   const CheckoutScreen({super.key});
@@ -13,11 +15,13 @@ class CheckoutScreen extends ConsumerStatefulWidget {
 
 class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
   String selectedPaymentMethod = 'درگاه پرداخت';
+  final OrderController _orderController = OrderController();
   @override
   Widget build(BuildContext context) {
     final deviceWidth = MediaQuery.of(context).size.width;
     final deviceHeight = MediaQuery.of(context).size.height;
     final cartData = ref.read(cartProvider);
+    final _cartProvider = ref.read(cartProvider.notifier);
     return Scaffold(
       appBar: AppBar(
         leading: ModalRoute.of(context)!.canPop
@@ -216,27 +220,93 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                 },
               ),
             ),
-            Container(
-              width: deviceWidth,
-              height: 56,
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 30),
-              decoration: BoxDecoration(
-                color: const Color(0xff5796E4),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Center(
-                child: Text(
-                  selectedPaymentMethod == 'درگاه پرداخت'
-                      ? 'پرداخت'
-                      : 'ثبت سفارش',
-                  style:const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            )
+            ref.read(userProvider)!.state == ''
+                ? InkWell(
+                    focusColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () {},
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 30, vertical: 30),
+                      width: deviceWidth,
+                      height: 56,
+                      decoration: BoxDecoration(
+                        color: Colors.yellow.shade800,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: const Center(
+                          child: Text(
+                        'لطفا آدرس خود را وارد کنید',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16),
+                      )),
+                    ),
+                  )
+                : InkWell(
+                    focusColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () async {
+                      if (selectedPaymentMethod == 'درگاه پرداخت') {
+                        // Pay with stripe to place the order
+                      } else {
+                        await Future.forEach(
+                          _cartProvider.getCartItems.entries,
+                          (entry) {
+                            var item = entry.value;
+                            _orderController.uploadOrders(
+                              id: '',
+                              fullName: ref.read(userProvider)!.fullName,
+                              email: ref.read(userProvider)!.email,
+                              // state: ref.read(userProvider)!.state,
+                              state: 'ایران',
+                              // city: ref.read(userProvider)!.city,
+                              city: 'تهران',
+                              // locality: ref.read(userProvider)!.locality,
+                              locality:
+                                  'شهریار_شاهد شهر_خیابان دکتر حسابی_کوچه شهریار_پلاک6_زرنگ 4',
+                              productName: item.productName,
+                              productPrice: item.productPrice,
+                              quantity: item.quantity,
+                              category: item.category,
+                              image: item.image[0],
+                              buyerId: ref.read(userProvider)!.id,
+                              vendorId: item.vendorId,
+                              processing: true,
+                              delivered: false,
+                              // ignore: use_build_context_synchronously
+                              context: context,
+                            );
+                          },
+                        );
+                      }
+                    },
+                    child: Container(
+                      width: deviceWidth,
+                      height: 56,
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 30),
+                      decoration: BoxDecoration(
+                        color: const Color(0xff5796E4),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Center(
+                        child: Text(
+                          selectedPaymentMethod == 'درگاه پرداخت'
+                              ? 'پرداخت'
+                              : 'ثبت سفارش',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
           ],
         ),
       ),

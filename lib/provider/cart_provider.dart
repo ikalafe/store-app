@@ -86,7 +86,7 @@ class CartNotifier extends StateNotifier<Map<String, CartModel>> {
   void removeCartItem(String productId) {
     state.remove(productId);
     // Notify Listiners that the state has change
-    state = {...state}; 
+    state = {...state};
   }
 
   // Method to calculate total amount of items we have in cart
@@ -97,4 +97,6 @@ class CartNotifier extends StateNotifier<Map<String, CartModel>> {
     });
     return totalAmount;
   }
+
+  Map<String, CartModel> get getCartItems => state;
 }
