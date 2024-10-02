@@ -5,6 +5,7 @@ import 'package:mac_store_app/common/utils.dart';
 import 'package:mac_store_app/controllers/order_controller.dart';
 import 'package:mac_store_app/provider/cart_provider.dart';
 import 'package:mac_store_app/provider/user_provider.dart';
+import 'package:mac_store_app/views/screens/detail/screens/shipping_address_screen.dart';
 
 class CheckoutScreen extends ConsumerStatefulWidget {
   const CheckoutScreen({super.key});
@@ -46,63 +47,78 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                  height: 100,
-                  width: deviceHeight,
-                  decoration: BoxDecoration(
-                    color: const Color(0xffEFF6FF),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 30),
-                            child: Icon(
-                              Iconsax.location_copy,
-                              color: Color(0xff355B8A),
-                            ),
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'آدرس را وارد کنید',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                'استان را وارد کنید',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 12),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                'شهر را وارد کنید',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 12),
-                              )
-                            ],
-                          ),
-                        ],
+                InkWell(
+                  focusColor: Colors.transparent,
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ShippingAddressScreen(),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 30),
-                        child: Icon(
-                          Iconsax.edit_copy,
-                          color: Colors.blue.shade600,
+                    );
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 15),
+                    height: 100,
+                    width: deviceHeight,
+                    decoration: BoxDecoration(
+                      color: const Color(0xffEFF6FF),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 30),
+                              child: Icon(
+                                Iconsax.location_copy,
+                                color: Color(0xff355B8A),
+                              ),
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'آدرس را وارد کنید',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  'استان را وارد کنید',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 12),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  'شهر را وارد کنید',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 12),
+                                )
+                              ],
+                            ),
+                          ],
                         ),
-                      )
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.only(left: 30),
+                          child: Icon(
+                            Iconsax.edit_copy,
+                            color: Colors.blue.shade600,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 Container(
@@ -225,7 +241,14 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                     focusColor: Colors.transparent,
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                const ShippingAddressScreen()),
+                      );
+                    },
                     child: Container(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 30, vertical: 30),
