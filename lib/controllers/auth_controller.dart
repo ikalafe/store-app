@@ -134,4 +134,63 @@ class AuthController {
       debugPrint('Error Sign Out: $e');
     }
   }
+
+  // Update user's state, city and locality
+  Future<void> updateUserLocation({
+    required context,
+    required String id,
+    required String state,
+    required String city,
+    required String locality,
+  }) async {
+    try {
+      // Make an http PUT request to update user's state, city and locality
+      final http.Response response = await http.put(
+        Uri.parse('$uri/api/users/$id'),
+        //Encode the update data(state, city, locality) as json object
+        body: jsonEncode({
+          "state": state,
+          "city": city,
+          "locality": locality,
+        }),
+        // Set the header for the request to specify that the content is Json
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8'
+        },
+      );
+      manageHttpResponse(
+        response: response,
+        context: context,
+        onSuccess: () async {
+          // Decode the updated user data from the response body
+          // This converts the json string response into Dart Map
+          final updatedUser = jsonDecode(response.body);
+
+          // Access Shared prefernces for local data storage
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+
+          // Encode the update user data as json String
+          // This prepares the data for storage in shared preference
+          final userJson = jsonEncode(updatedUser);
+
+          // Update the application state with the updated user data user in Reverpod
+          // This ensures the app reflects the most recent user data
+          providerContainer.read(userProvider.notifier).setUser(userJson);
+
+          // Store the updated user data in shared preferences for future user
+          // This allows the app to retrive the user data even after the app restart
+          await preferences.setString('user', userJson);
+        },
+      );
+    } catch (e) {
+      // Catch any error that occure during the proccess
+      // Show an error message to the user if the update update fails
+      showSnackBar(
+        context,
+        'خطایی در بروزرسانی آدرس رخ داد.',
+        background: Colors.red.shade800,
+      );
+      debugPrint('***** خطایی در بروزرسانی آدرس رخ داد: $e *****');
+    }
+  }
 }
