@@ -19,6 +19,7 @@ class _ShippingAddressScreenState extends ConsumerState<ShippingAddressScreen> {
   @override
   Widget build(BuildContext context) {
     final user = ref.read(userProvider);
+    final updateUser = ref.read(userProvider.notifier);
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.96),
       appBar: AppBar(
@@ -186,13 +187,22 @@ class _ShippingAddressScreenState extends ConsumerState<ShippingAddressScreen> {
         child: InkWell(
           onTap: () async {
             if (_formKey.currentState!.validate()) {
-              await _authController.updateUserLocation(
+              await _authController
+                  .updateUserLocation(
                 context: context,
                 id: user!.id,
                 state: state,
                 city: city,
                 locality: locality,
-              );
+              )
+                  .whenComplete(() {
+                updateUser.recreateUserState(
+                  state: state,
+                  city: city,
+                  locality: locality,
+                );
+                Navigator.pop(context);
+              });
             } else {
               print('not valid');
             }

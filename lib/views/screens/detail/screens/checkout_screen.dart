@@ -72,9 +72,9 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Row(
+                        Row(
                           children: [
-                            Padding(
+                            const Padding(
                               padding: EdgeInsets.symmetric(horizontal: 30),
                               child: Icon(
                                 Iconsax.location_copy,
@@ -86,26 +86,38 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'آدرس را وارد کنید',
+                                  user!.state.isNotEmpty
+                                      ? user.state
+                                      : 'آدرس را وارد کنید',
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 5,
                                 ),
                                 Text(
-                                  'استان را وارد کنید',
-                                  style: TextStyle(
+                                  user.city.isNotEmpty
+                                      ? user.city
+                                      : 'استان را وارد کنید',
+                                  style: const TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 5,
                                 ),
-                                Text(
-                                  'شهر را وارد کنید',
-                                  style: TextStyle(
+                                SizedBox(
+                                  width: deviceWidth * 0.5,
+                                  child: Text(
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    user.locality.isNotEmpty
+                                        ? user.locality
+                                        : 'شهر را وارد کنید',
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.w500,
-                                      fontSize: 12),
+                                      fontSize: 12,
+                                    ),
+                                  ),
                                 )
                               ],
                             ),
