@@ -16,6 +16,42 @@ class _ShippingAddressScreenState extends ConsumerState<ShippingAddressScreen> {
   late String state;
   late String city;
   late String locality;
+
+  // Show Loading Dialog
+  _showLoadingDialog() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: const Padding(
+              padding: EdgeInsets.all(15),
+              child: Directionality(
+                textDirection: TextDirection.rtl,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CircularProgressIndicator(),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Text(
+                      'درحال به روز رسانی...',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = ref.read(userProvider);
@@ -187,6 +223,7 @@ class _ShippingAddressScreenState extends ConsumerState<ShippingAddressScreen> {
         child: InkWell(
           onTap: () async {
             if (_formKey.currentState!.validate()) {
+              _showLoadingDialog();
               await _authController
                   .updateUserLocation(
                 context: context,
@@ -201,7 +238,9 @@ class _ShippingAddressScreenState extends ConsumerState<ShippingAddressScreen> {
                   city: city,
                   locality: locality,
                 );
-                Navigator.pop(context);
+                Navigator.pop(context); // This will close the Dialog
+                Navigator.pop(
+                    context); // This will close the Shipping screen meaning it will take us back to the previews
               });
             } else {
               print('not valid');
