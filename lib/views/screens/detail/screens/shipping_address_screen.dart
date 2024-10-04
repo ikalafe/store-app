@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mac_store_app/controllers/auth_controller.dart';
+import 'package:mac_store_app/provider/user_provider.dart';
 
-class ShippingAddressScreen extends StatefulWidget {
+class ShippingAddressScreen extends ConsumerStatefulWidget {
   const ShippingAddressScreen({super.key});
 
   @override
-  State<ShippingAddressScreen> createState() => _ShippingAddressScreenState();
+  _ShippingAddressScreenState createState() => _ShippingAddressScreenState();
 }
 
-class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
+class _ShippingAddressScreenState extends ConsumerState<ShippingAddressScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final AuthController _authController = AuthController();
+  late String state;
+  late String city;
+  late String locality;
   @override
   Widget build(BuildContext context) {
+    final user = ref.read(userProvider);
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.96),
       appBar: AppBar(
@@ -38,6 +46,7 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
             child: Column(
               children: [
                 TextFormField(
+                  onChanged: (value) => state = value,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'لطفا این قسمت را خالی نگزارید';
@@ -45,7 +54,12 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
                       return null;
                     }
                   },
+                  style: const TextStyle(fontFamily: 'Dana'),
                   decoration: InputDecoration(
+                    errorStyle: const TextStyle(
+                      fontFamily: 'Dana',
+                      fontWeight: FontWeight.bold,
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -75,6 +89,8 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
                   height: 30,
                 ),
                 TextFormField(
+                  style: const TextStyle(fontFamily: 'Dana'),
+                  onChanged: (value) => city = value,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'لطفا این قسمت را خالی نگزارید';
@@ -83,6 +99,10 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
                     }
                   },
                   decoration: InputDecoration(
+                    errorStyle: const TextStyle(
+                      fontFamily: 'Dana',
+                      fontWeight: FontWeight.bold,
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -112,6 +132,8 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
                   height: 30,
                 ),
                 TextFormField(
+                  style: const TextStyle(fontFamily: 'Dana'),
+                  onChanged: (value) => locality = value,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'لطفا این قسمت را خالی نگزارید';
@@ -122,6 +144,10 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
                   keyboardType: TextInputType.multiline,
                   maxLines: 5,
                   decoration: InputDecoration(
+                    errorStyle: const TextStyle(
+                      fontFamily: 'Dana',
+                      fontWeight: FontWeight.bold,
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -158,9 +184,15 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
         child: InkWell(
-          onTap: () {
+          onTap: () async {
             if (_formKey.currentState!.validate()) {
-              print('valid');
+              await _authController.updateUserLocation(
+                context: context,
+                id: user!.id,
+                state: state,
+                city: city,
+                locality: locality,
+              );
             } else {
               print('not valid');
             }
@@ -169,7 +201,7 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
             width: MediaQuery.of(context).size.width,
             height: 58,
             decoration: BoxDecoration(
-              color: Color(0xff5796E4),
+              color: const Color(0xff5796E4),
               borderRadius: BorderRadius.circular(16),
             ),
             child: const Center(

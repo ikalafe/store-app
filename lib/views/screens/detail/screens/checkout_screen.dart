@@ -23,6 +23,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     final deviceHeight = MediaQuery.of(context).size.height;
     final cartData = ref.read(cartProvider);
     final _cartProvider = ref.read(cartProvider.notifier);
+    final user = ref.watch(userProvider);
     return Scaffold(
       appBar: AppBar(
         leading: ModalRoute.of(context)!.canPop
@@ -236,7 +237,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                 },
               ),
             ),
-            ref.read(userProvider)!.state == ''
+            user!.state.isEmpty
                 ? InkWell(
                     focusColor: Colors.transparent,
                     splashColor: Colors.transparent,
