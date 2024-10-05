@@ -24,7 +24,9 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   final PageController pageController = PageController();
   @override
   Widget build(BuildContext context) {
-    final _cartProvider = ref.read(cartProvider.notifier);
+    final cartProviderData = ref.read(cartProvider.notifier);
+    final cartData = ref.watch(cartProvider);
+    final isInCart = cartData.containsKey(widget.product.id);
     return Scaffold(
       bottomNavigationBar: Directionality(
         textDirection: TextDirection.rtl,
@@ -38,30 +40,40 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                  onTap: () {
-                    _cartProvider.addProductToCart(
-                      productName: widget.product.productName,
-                      productPrice: widget.product.productPrice,
-                      category: widget.product.category,
-                      image: widget.product.images,
-                      vendorId: widget.product.vendorId,
-                      productQuantity: widget.product.quantity,
-                      quantity: 1,
-                      productId: widget.product.id,
-                      description: widget.product.description,
-                      fullName: widget.product.fullName,
-                    );
-                    showSnackBar(
-                      context,
-                      'محصول به سبد خرید اضافه شد',
-                      background: Colors.green,
-                    );
-                  },
+                  onTap: isInCart
+                      ? () {
+                          showSnackBar(
+                            context,
+                            'قبلا به سبد خرید اضافه شده',
+                            background: Colors.yellow.shade800,
+                          );
+                        }
+                      : () {
+                          cartProviderData.addProductToCart(
+                            productName: widget.product.productName,
+                            productPrice: widget.product.productPrice,
+                            category: widget.product.category,
+                            image: widget.product.images,
+                            vendorId: widget.product.vendorId,
+                            productQuantity: widget.product.quantity,
+                            quantity: 1,
+                            productId: widget.product.id,
+                            description: widget.product.description,
+                            fullName: widget.product.fullName,
+                          );
+                          showSnackBar(
+                            context,
+                            'محصول به سبد خرید اضافه شد',
+                            background: Colors.green,
+                          );
+                        },
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.45,
                     height: 50,
                     decoration: BoxDecoration(
-                      color: Colors.blue.shade500,
+                      color: isInCart
+                          ? Colors.blueGrey.shade300
+                          : Colors.blue.shade500,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: const Center(

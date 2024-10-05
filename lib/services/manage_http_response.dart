@@ -29,10 +29,14 @@ void manageHttpResponse({
 void showSnackBar(BuildContext context, String title, {Color? background}) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      content: Text(
-        title,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
+      content: Directionality(
+        textDirection: TextDirection.rtl,
+        child: Text(
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          title,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
       ),
       backgroundColor: background,
       behavior: SnackBarBehavior.floating,

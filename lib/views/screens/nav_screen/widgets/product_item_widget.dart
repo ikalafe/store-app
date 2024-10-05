@@ -25,7 +25,7 @@ class ProductItemWidget extends StatelessWidget {
       },
       child: Container(
         width: height * 0.23,
-        margin: const EdgeInsets.symmetric(horizontal: 8),
+        // margin: const EdgeInsets.symmetric(horizontal: 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [

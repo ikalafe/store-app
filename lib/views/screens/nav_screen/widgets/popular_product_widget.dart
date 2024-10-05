@@ -50,7 +50,7 @@ class _PopularProductWidgetState extends State<PopularProductWidget> {
                 final product = products[index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0,
+                    // horizontal: 8.0,
                     vertical: 10,
                   ),
                   child: ProductItemWidget(
