@@ -13,9 +13,9 @@ class ShippingAddressScreen extends ConsumerStatefulWidget {
 class _ShippingAddressScreenState extends ConsumerState<ShippingAddressScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final AuthController _authController = AuthController();
-  late String state;
-  late String city;
-  late String locality;
+  late TextEditingController _stateController;
+  late TextEditingController _cityController;
+  late TextEditingController _localityController;
 
   // Show Loading Dialog
   _showLoadingDialog() {
@@ -53,6 +53,19 @@ class _ShippingAddressScreenState extends ConsumerState<ShippingAddressScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    // Read the current user data from the provider
+    final user = ref.read(userProvider);
+
+    // Initialize the controllers with the current data if available
+    // if user Data is not available, initialize with an empty String
+    _stateController = TextEditingController(text: user?.state ?? '');
+    _cityController = TextEditingController(text: user?.city ?? '');
+    _localityController = TextEditingController(text: user?.locality ?? '');
+  }
+
+  @override
   Widget build(BuildContext context) {
     final user = ref.read(userProvider);
     final updateUser = ref.read(userProvider.notifier);
@@ -83,7 +96,7 @@ class _ShippingAddressScreenState extends ConsumerState<ShippingAddressScreen> {
             child: Column(
               children: [
                 TextFormField(
-                  onChanged: (value) => state = value,
+                  controller: _stateController,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'لطفا این قسمت را خالی نگزارید';
@@ -127,7 +140,7 @@ class _ShippingAddressScreenState extends ConsumerState<ShippingAddressScreen> {
                 ),
                 TextFormField(
                   style: const TextStyle(fontFamily: 'Dana'),
-                  onChanged: (value) => city = value,
+                  controller: _cityController,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'لطفا این قسمت را خالی نگزارید';
@@ -170,7 +183,7 @@ class _ShippingAddressScreenState extends ConsumerState<ShippingAddressScreen> {
                 ),
                 TextFormField(
                   style: const TextStyle(fontFamily: 'Dana'),
-                  onChanged: (value) => locality = value,
+                  controller: _localityController,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'لطفا این قسمت را خالی نگزارید';
@@ -228,15 +241,15 @@ class _ShippingAddressScreenState extends ConsumerState<ShippingAddressScreen> {
                   .updateUserLocation(
                 context: context,
                 id: user!.id,
-                state: state,
-                city: city,
-                locality: locality,
+                state: _stateController.text,
+                city: _cityController.text,
+                locality: _localityController.text,
               )
                   .whenComplete(() {
                 updateUser.recreateUserState(
-                  state: state,
-                  city: city,
-                  locality: locality,
+                  state: _stateController.text,
+                  city: _cityController.text,
+                  locality: _localityController.text,
                 );
                 Navigator.pop(context); // This will close the Dialog
                 Navigator.pop(
