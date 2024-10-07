@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:mac_store_app/global_variables.dart';
 import 'package:mac_store_app/models/order_model.dart';
@@ -68,6 +70,35 @@ class OrderController {
         background: Colors.red.shade700,
       );
       debugPrint('***** خطایی در ثبت سفارش رخ داد : $e *****');
+    }
+  }
+
+  // Method to GET orders by buyerId
+  Future<List<OrderModel>> loadOrders({required String buyerId}) async {
+    try {
+      // Send an HTTP GET request to get the orders by the buyerId
+      final http.Response response = await http.get(
+        Uri.parse('$uri/api/orders/$buyerId'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-9'
+        },
+      );
+      // Check if the response status code is 200.
+      if (response.statusCode == 200) {
+        // Parse the Json response body into dynamic List
+        // This convers the json data into a format that can be further processed in Dart.
+        List<dynamic> data = jsonDecode(response.body);
+        // Map the dynamic list to list of OrderModel object using the from json factory method
+        //This step convert the raw data into list of the orders instanse, witch are easier to work with
+        List<OrderModel> orders =
+            data.map((order) => OrderModel.fromJson(order)).toList();
+        return orders;
+      } else {
+        // Throw an exception if the server responded with an error status code
+        throw Exception('Faild to load Orders');
+      }
+    } catch (e) {
+      throw Exception('Errorr loading orders');
     }
   }
 }
