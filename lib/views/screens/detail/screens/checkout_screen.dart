@@ -11,7 +11,7 @@ class CheckoutScreen extends ConsumerStatefulWidget {
   const CheckoutScreen({super.key});
 
   @override
-  _CheckoutScreenState createState() => _CheckoutScreenState();
+  ConsumerState<CheckoutScreen> createState() => _CheckoutScreenState();
 }
 
 class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
@@ -89,7 +89,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                                   user!.state.isNotEmpty
                                       ? user.state
                                       : 'آدرس را وارد کنید',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: const TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 const SizedBox(
                                   height: 5,
