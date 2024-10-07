@@ -56,9 +56,9 @@ class OrderModel {
     };
   }
 
-  factory OrderModel.fromMap(Map<String, dynamic> map) {
+  factory OrderModel.fromJson(Map<String, dynamic> map) {
     return OrderModel(
-      id: map['id'] as String,
+      id: map['_id'] as String,
       fullName: map['fullName'] as String,
       email: map['email'] as String,
       state: map['state'] as String,
@@ -77,6 +77,4 @@ class OrderModel {
   }
 
   String toJson() => json.encode(toMap());
-
-  factory OrderModel.fromJson(String source) => OrderModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }

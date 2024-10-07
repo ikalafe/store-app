@@ -249,7 +249,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                 },
               ),
             ),
-            user!.state.isEmpty
+            user.state.isEmpty
                 ? InkWell(
                     focusColor: Colors.transparent,
                     splashColor: Colors.transparent,
