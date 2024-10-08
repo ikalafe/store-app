@@ -83,7 +83,7 @@ class _OrderScreenState extends ConsumerState<OrderScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              height: 120,
+                              height: 130,
                               child: Padding(
                                 padding:
                                     const EdgeInsets.only(top: 10.0, right: 15),
@@ -111,9 +111,6 @@ class _OrderScreenState extends ConsumerState<OrderScreen> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
                                     Text(
                                       'در دسته: ${order.category}',
                                       style: TextStyle(
@@ -121,6 +118,10 @@ class _OrderScreenState extends ConsumerState<OrderScreen> {
                                         color: Colors.grey.shade600,
                                       ),
                                     ),
+                                    InkWell(
+                                      child: const Icon(Iconsax.trash_copy),
+                                      onTap: () {},
+                                    )
                                   ],
                                 ),
                               ),
