@@ -6,6 +6,7 @@ import 'package:mac_store_app/controllers/order_controller.dart';
 import 'package:mac_store_app/models/order_model.dart';
 import 'package:mac_store_app/provider/order_provider.dart';
 import 'package:mac_store_app/provider/user_provider.dart';
+import 'package:mac_store_app/views/screens/detail/screens/order_detail_screen.dart';
 import 'package:mac_store_app/views/screens/nav_screen/widgets/image.dart';
 
 class OrderScreen extends ConsumerStatefulWidget {
@@ -65,115 +66,132 @@ class _OrderScreenState extends ConsumerState<OrderScreen> {
                 itemCount: orders.length,
                 itemBuilder: (context, index) {
                   final OrderModel order = orders[index];
-                  return Container(
-                    width: deviceWidth,
-                    height: 154,
-                    margin: const EdgeInsets.only(
-                      top: 16,
-                      right: 16,
-                      left: 16,
-                    ),
-                    decoration: BoxDecoration(
-                      color: const Color(0xffEFF6FF),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              height: 130,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 10.0, right: 15),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    SizedBox(
-                                      width: 130,
-                                      child: Text(
-                                        order.productName,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w700,
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => OrderDetailScreen(order: order),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: deviceWidth,
+                      height: 154,
+                      margin: const EdgeInsets.only(
+                        top: 16,
+                        right: 16,
+                        left: 16,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xffEFF6FF),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                height: 130,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 10.0, right: 15),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SizedBox(
+                                        width: 130,
+                                        child: Text(
+                                          order.productName,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w700,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Text(
-                                      convertToPersian(order.productPrice),
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
+                                      Text(
+                                        convertToPersian(order.productPrice),
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      'در دسته: ${order.category}',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey.shade600,
+                                      Text(
+                                        'در دسته: ${order.category}',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey.shade600,
+                                        ),
                                       ),
+                                      InkWell(
+                                        child: const Icon(Iconsax.trash_copy),
+                                        onTap: () {},
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 15, left: 15),
+                                child: Stack(
+                                  children: [
+                                    ImageLoadingService(
+                                      imageUrl: order.image,
+                                      widthImage: 120,
+                                      heithImage: 120,
+                                      imageBorderRadius:
+                                          BorderRadius.circular(12),
                                     ),
-                                    InkWell(
-                                      child: const Icon(Iconsax.trash_copy),
-                                      onTap: () {},
+                                    Positioned(
+                                      left: 25,
+                                      right: 25,
+                                      bottom: 0,
+                                      child: Container(
+                                        height: 25,
+                                        decoration: BoxDecoration(
+                                          color: order.delivered == true
+                                              ? Colors.green.shade500
+                                              : order.processing == true
+                                                  ? Colors.blue.shade300
+                                                  : Colors.red.shade400,
+                                          borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(8),
+                                            topRight: Radius.circular(8),
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            order.delivered == true
+                                                ? 'تحویل'
+                                                : order.processing == true
+                                                    ? 'پردازش'
+                                                    : 'لغو شده',
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                     )
                                   ],
                                 ),
                               ),
-                            ),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 15, left: 15),
-                              child: Stack(
-                                children: [
-                                  ImageLoadingService(
-                                    imageUrl: order.image,
-                                    widthImage: 120,
-                                    heithImage: 120,
-                                    imageBorderRadius:
-                                        BorderRadius.circular(12),
-                                  ),
-                                  Positioned(
-                                    left: 25,
-                                    right: 25,
-                                    bottom: 0,
-                                    child: Container(
-                                      height: 25,
-                                      decoration: BoxDecoration(
-                                        color: Colors.blue.shade300,
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(8),
-                                          topRight: Radius.circular(8),
-                                        ),
-                                      ),
-                                      child: Center(
-                                          child: Text(
-                                        order.delivered == true
-                                            ? 'تحویل'
-                                            : order.processing == true
-                                                ? 'پردازش'
-                                                : 'لغو شده',
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      )),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   );
                 },
