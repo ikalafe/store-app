@@ -131,7 +131,9 @@ class _OrderScreenState extends ConsumerState<OrderScreen> {
                                       ),
                                       InkWell(
                                         child: const Icon(Iconsax.trash_copy),
-                                        onTap: () {},
+                                        onTap: () {
+                                          
+                                        },
                                       )
                                     ],
                                   ),

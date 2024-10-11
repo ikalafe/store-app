@@ -57,8 +57,7 @@ class OrderController {
         onSuccess: () {
           showSnackBar(
             context,
-            response.body,
-            // 'سفارش شما با موفقیت ثبت شد',
+            'سفارش شما با موفقیت ثبت شد',
             background: Colors.green,
           );
         },
@@ -80,7 +79,7 @@ class OrderController {
       final http.Response response = await http.get(
         Uri.parse('$uri/api/orders/$buyerId'),
         headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-9'
+          'Content-Type': 'application/json; charset=UTF-8'
         },
       );
       // Check if the response status code is 200.
@@ -99,6 +98,31 @@ class OrderController {
       }
     } catch (e) {
       throw Exception('Errorr loading orders');
+    }
+  }
+
+  // Delete order by ID
+  Future<void> deleteOrder({required String id, required context}) async {
+    try {
+      // Send an HTTP request to delete the order by _id
+      http.Response response = await http.delete(
+        Uri.parse('$uri/api/orders/$id'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8'
+        },
+      );
+
+      // Handle the http Response
+      manageHttpResponse(
+        response: response,
+        context: context,
+        onSuccess: () {
+          showSnackBar(context, 'سفارش با موفقیت حذف شد');
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, 'مشکلی در حذف سفارش رخ داد');
+      debugPrint('***** مشکل در حذف سفارش: $e *****');
     }
   }
 }

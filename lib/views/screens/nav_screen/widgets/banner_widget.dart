@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mac_store_app/controllers/banner_controller.dart';
-import 'package:mac_store_app/models/banner_model.dart';
 import 'package:mac_store_app/provider/banner_provider.dart';
 import 'package:mac_store_app/views/screens/nav_screen/widgets/image.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
