@@ -117,7 +117,11 @@ class OrderController {
         response: response,
         context: context,
         onSuccess: () {
-          showSnackBar(context, 'سفارش با موفقیت حذف شد');
+          showSnackBar(
+            context,
+            'سفارش با موفقیت حذف شد',
+            background: Colors.amber.shade700,
+          );
         },
       );
     } catch (e) {
